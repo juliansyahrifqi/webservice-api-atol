@@ -48,7 +48,24 @@ class Buku {
         }
 
         return false;
+    }
 
+    public function listId() {
+        $query = "SELECT * FROM " . $this->table . " WHERE id_buku = ? LIMIT 0,1";
+
+        $stmt = $this->koneksi->prepare($query);
+
+        $stmt->bindParam(1, $this->id_buku);
+
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $this->judul_buku = $row['judul_buku'];
+        $this->penerbit = $row['penerbit'];
+        $this->penulis = $row['penulis'];
+        $this->deskripsi = $row['deskripsi'];
+        $this->date_created = $row['date_created'];
     }
 }
 ?>

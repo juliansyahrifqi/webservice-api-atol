@@ -4,7 +4,7 @@
     header("Content-Type: application/json");
     header("Access-Control-Allow-Method: POST");
     header("Access-Control-Max-Age: 3600");
-header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+    header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
     include_once '../config/database.php';
     include_once '../objects/buku.php';
@@ -20,7 +20,7 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
         $buku->judul_buku = $data->judul_buku;
         $buku->penerbit = $data->penerbit;
         $buku->penulis = $data->penulis;
-        $buku->deksripsi = $data->deskripsi;
+        $buku->deskripsi = $data->deskripsi;
         $buku->date_created = date('Y-m-d H:i:s');
 
         if($buku->tambah()) {
