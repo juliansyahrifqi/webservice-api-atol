@@ -112,21 +112,26 @@ class Buku {
         return false;
     }
 
-    public function search($keywords) {
-        $query = "SELECT * FROM " . $this->table. " WHERE judul_buku LIKE ?";
-
+    
+    function search($keywords){
+  
+        // select all query
+        $query = "SELECT * FROM ".$this->table . " WHERE judul_buku LIKE ?";
+      
+        // prepare query statement
         $stmt = $this->koneksi->prepare($query);
-
-        $keywords = htmlspecialchars(strip_tags($keywords));
-        $keywords = "%{keywords}%";
-
+      
+        // sanitize
+        $keywords=htmlspecialchars(strip_tags($keywords));
+        $keywords = "%{$keywords}%";
+      
+        // bind
         $stmt->bindParam(1, $keywords);
-        $stmt->bindParam(2, $keywords);
-        $stmt->bindParam(3, $keywords);
-
+              
+        // execute query
         $stmt->execute();
-
+      
         return $stmt;
-    } 
+    }
 }
 ?>
