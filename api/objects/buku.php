@@ -67,5 +67,66 @@ class Buku {
         $this->deskripsi = $row['deskripsi'];
         $this->date_created = $row['date_created'];
     }
+
+    public function update() {
+        $query = "UPDATE " . $this->table . "
+                SET judul_buku=:judul_buku, penerbit=:penerbit, 
+                penulis=:penulis, deskripsi=:deskripsi 
+                WHERE id_buku=:id_buku";
+
+        $stmt = $this->koneksi->prepare($query);
+
+        $this->judul_buku = htmlspecialchars(strip_tags($this->judul_buku));
+        $this->penerbit = htmlspecialchars(strip_tags($this->penerbit));
+        $this->penulis = htmlspecialchars(strip_tags($this->penulis));
+        $this->deskripsi = htmlspecialchars(strip_tags($this->deskripsi));
+        $this->id_buku = htmlspecialchars(strip_tags($this->id_buku));
+
+        $stmt->bindParam(':judul_buku', $this->judul_buku);
+        $stmt->bindParam(':penerbit', $this->penerbit);
+        $stmt->bindParam(':penulis', $this->penulis);
+        $stmt->bindParam(':deskripsi', $this->deskripsi);
+        $stmt->bindParam(':id_buku', $this->id_buku);
+
+        if($stmt->execute()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function delete() {
+
+        $query = "DELETE FROM " .$this->table." WHERE id_buku = ?";
+
+        $stmt = $this->koneksi->prepare($query);
+
+        $this->id = htmlspecialchars(strip_tags($this->id_buku));
+
+        $stmt->bindParam(1, $this->id);
+
+        if($stmt->execute()) {
+            return true;
+        } 
+
+        return false;
+    }
+
+    public function search($keywords) {
+        $query = "SELECT * FROM " . $this->table. " WHERE judul_buku LIKE ?";
+
+        $stmt = $this->koneksi->prepare($query);
+
+        $keywords = htmlspecialchars(strip_tags($keywords));
+        $keywords = "%{keywords}%";
+
+        $stmt->bindParam(1, $keywords);
+        $stmt->bindParam(2, $keywords);
+        $stmt->bindParam(3, $keywords);
+
+        $stmt->execute();
+
+        return $stmt;
+    } 
 }
 ?>

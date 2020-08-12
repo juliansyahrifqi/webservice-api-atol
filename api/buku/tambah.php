@@ -33,7 +33,7 @@
             echo json_encode(array("Message" => "Data Buku Gagal Ditambahkan"));
         }
     } else {
-        http_response_code(400);
+        http_response_code(404);
 
         echo json_encode(array("Message" => "Gagal! Semua Data Harus Diisi!"));
     }
