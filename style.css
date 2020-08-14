@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.title {
+    margin: 40px;
+    font-size: 50px;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 40px 40px;
+    margin-top: 20px;
+    
+}
+
+.card {
+    border: 1px solid black;
+    display: grid;
+    justify-items: center;
+    padding: 40px;
+    background-color: white;
+    border-radius: 2px;
+}
+
+hr {
+    width: 300px;
+    margin-top: 15px;
+}
+
+.card-title {
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.logo-club {
+    width: 200px;
+    height: 200px;
+}
+
+.card-content {
+    margin-top: 20px;
+}

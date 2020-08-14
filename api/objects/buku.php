@@ -16,7 +16,7 @@ class Buku {
         $this->koneksi = $db;
     }
 
-    public function tampil() {
+    public function listAll() {
        $query = "SELECT * FROM ". $this->table ." ORDER BY id_buku ASC";
 
        $stmt = $this->koneksi->prepare($query);
