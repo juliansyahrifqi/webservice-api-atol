@@ -3,7 +3,7 @@
     header("Content-Type: application/json");
 
     include_once '../config/database.php';
-    include_once '../objects/buku.php';
+    include_once '../models/buku.php';
 
     // Instance database
     $database = new Database();
@@ -30,11 +30,14 @@
             // Mendapatkan data buku
             $buku_item = array(
                 "id_buku" => $row['id_buku'],
-                "judul_buku" => $row['judul_buku'],
-                "penerbit" => $row['penerbit'],
-                "penulis" => $row['penulis'],
+                "judul" => $row['judul'],
+                "penulis" => $row['penerbit'],
+                "penerbit" => $row['penulis'],
                 "deskripsi" => $row['deskripsi'],
-                "date_created" => $row['date_created']
+                "bahasa" => $row['bahasa'],
+                "genre" => $row['genre'],
+                "jumlah_halaman" => $row['jumlah_halaman'],
+                "tahun_terbit" => $row['tahun_terbit']
             );
 
             // Tambahkan data ke record array
@@ -51,6 +54,6 @@
         http_response_code(404);
 
         // Tampilkan pesan
-        echo json_encode(array("message" => "Tidak atau belum ada data buku"));
+        echo json_encode(array("message" => "Belum ada data buku"));
     }
 ?>

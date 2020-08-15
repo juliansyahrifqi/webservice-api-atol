@@ -3,7 +3,7 @@
     header("Content-Type: application/json");
 
     include_once '../config/database.php';
-    include_once '../objects/buku.php';
+    include_once '../models/buku.php';
 
     // Instance database
     $database = new Database();
@@ -20,16 +20,19 @@
     // Method tampilkan data buku berdasarkan id
     $buku->listId();
 
-    if($buku->judul_buku != null) {
+    if($buku->judul != null) {
 
         // Array buku
         $buku_arr = array(
             "id_buku" => $buku->id_buku,
-            "judul_buku" => $buku->judul_buku,
-            "penerbit" => $buku->penerbit,
-            "penulis" => $buku->penulis,
+            "judul" => $buku->judul,
+            "penulis" => $buku->penerbit,
+            "penerbit" => $buku->penulis,
             "deskripsi" => $buku->deskripsi,
-            "date_created" => $buku->date_created
+            "bahasa" => $buku->bahasa,
+            "genre" => $buku->genre,
+            "jumlah_halaman" => $buku->jumlah_halaman,
+            "tahun_terbit" => $buku->tahun_terbit
         );
 
         // Set response kode 200 = OK!

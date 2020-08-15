@@ -2,7 +2,7 @@
 class Database {
 
     private $host = "localhost";
-    private $db = "uas_atol";
+    private $db = "web_service_buku";
     private $username = "root";
     private $pass = "";
 

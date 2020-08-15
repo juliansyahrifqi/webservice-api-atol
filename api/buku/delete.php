@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Methods: POST");
 
     include_once '../config/database.php';
-    include_once '../objects/buku.php';
+    include_once '../models/buku.php';
 
     // Instance database
     $database = new Database();

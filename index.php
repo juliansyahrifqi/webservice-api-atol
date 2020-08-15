@@ -1,19 +1,27 @@
 <?php
-    $url = 'https://api.football-data.org/v2/competitions/2014/teams';
-    $token = "27719df59a6f4a64959954fa35d4a6ad";
+    $url = 'https://api.football-data.org/v2/competitions/2021/standings';
+    $token = '89403b3a0d1c462c91d61cd6882f7d6d';
 
+    // Inisialisasi
     $curl = curl_init($url);
 
-
+    // Set HTTP Header : Token
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, [
-        'X-Auth-Token: 27719df59a6f4a64959954fa35d4a6ad'
+        'X-Auth-Token: '.$token.''
     ]);
 
+    // Mendapatkan respons
     $response = json_decode(curl_exec($curl), true);
+    
+    // Menutup CURL
     curl_close($curl);
 
-    $result = $response["teams"];
+    // Mendapatkan array tentang klasemen 
+    $result = $response['standings'];
+
+    // Mendapatkan array tentang kompetisi
+    $update = $response['competition'];
 ?>
 
 <!DOCTYPE html>
@@ -21,51 +29,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Test</title>
+
+    <!-- Google Icon Font -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Materialize CSS -->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <title>Klasemen Premier League</title>
 </head>
 <body>
-    <h1 class="title"><center>LA LIGA CLUB</center></h1>
-    <div class="container">
-        <?php if(!empty($result)) { ?>
-            <?php foreach($result as $res) : { ?>
-                <?php $image = $res['crestUrl']; ?>
-                <?php $image = preg_replace("/^http:/i", "https:", $image); ?>
-                
-                    
+     
+    <!-- Navigasi -->
 
-                    <div class="card">
-                        <span class="card-title"><strong><?= $res['name']; ?></strong></span>
+    <nav class="indigo darken-4">
+        <div class="nav-wrapper container">
+            <a href="#!" class="brand-logo">Premier League</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            
+            <ul class="right hide-on-med-and-down">
+                <li><a href="index.php">Klasemen</a></li>
+                <li><a href="klub.php">Daftar Klub</a></li>
+                <li><a href="pertandingan.php">Pertandingan</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+        <li><a href="index.php">Klasemen</a></li>
+        <li><a href="klub.php">Daftar Klub</a></li>
+        <li><a href="pertandingan.php">Pertandingan</a></li>
+    </ul>
+          
+    <div class="row">
+        <h2 class="center-align">Klasemen Premier League</h2>
+        <p class="center-align">Terakhir Update: <strong><?= $update['lastUpdated']; ?></strong></p>
+        <table class="klasemen" id="tabel-klasemen">
+            <thead>
+                <tr>
+                    <th class="center-align"> No.</th>
+                    <th colspan="2" class="center-align"> Klub</th>
+                    <th class="center-align"> Main</th>
+                    <th class="center-align"> Menang</th>
+                    <th class="center-align"> Seri </th>
+                    <th class="center-align"> Kalah </th>
+                    <th class="center-align"> GM </th>
+                    <th class="center-align"> GK</th>
+                    <th class="center-align"> SG </th>
+                    <th class="center-align"> Poin </th>
+                </tr>
                         
-                        <div class="card-image">
-                            <img src="<?= $image; ?>" class="logo-club">
-                        </div>
+            </thead>
+            <tbody>
 
-                        <hr>
+                <?php if(!empty($result)) { ?>  
+                    <?php foreach($result as $res) : ?>
+                        <?php $season = $res['type']; ?>
+                        <?php $match = $res['table']; ?>
 
-                        <div class="card-content">
-                           
-                            <label for="nama-pendek">Nama Pendek</label><br>
-                            <p><strong><?= $res['shortName']; ?></strong></p>
+                        <?php if($season == "TOTAL") { ?>
+                            <?php foreach($match as $m) : ?>
+                                <?php $image = $m['team']['crestUrl']; ?>
+                                <?php $image = preg_replace("/^http:/i", "https:", $image); ?>
 
-                            <label for="berdiri">Didirikan</label>
-                            <p><strong><?= $res['founded']; ?></strong></p>
+                            
+                                    <tr>
+                                        <td class="center-align"><?= $m['position']; ?></td>
+                                        <td class="center-align">
+                                            <img src="<?= $image;?>" class="icon-team">
+                                        </td>
+                                        <td>
+                                            <a href="info-klub.php?id=<?= $m['team']['id']; ?>"><?= $m['team']['name']; ?></a>
+                                        </td>
+                                        <td class="center-align"><?= $m['playedGames']; ?></td>
+                                        <td class="center-align"><?= $m['won']; ?></td>
+                                        <td class="center-align"><?= $m['draw']; ?></td>
+                                        <td class="center-align"><?= $m['lost']; ?></td>
+                                        <td class="center-align"><?= $m['goalsFor']; ?></td>
+                                        <td class="center-align"><?= $m['goalsAgainst']; ?></td>
+                                        <td class="center-align"><?= $m['goalDifference']; ?></td>
+                                        <td class="center-align"><?= $m['points']; ?></td>
+                                    </tr>
+                            <?php endforeach; ?>
+                        <?php } ?>
+                    <?php endforeach; ?>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>   
 
-                            <label for="stadion">Stadion</label>
-                            <p><strong><?= $res['venue']; ?></strong></p>
-
-                            <label for="website">Website</label>
-                            <p><strong><?= $res['website']; ?></strong></p>
-                        </div>
-
-                        <div class="card-action">
-                            <a href="info-klub.php?id=<?= $res['id']; ?>">Info Klub</a>
-                        </div>
-                    </div> 
-            <?php } endforeach; ?> 
-        <?php } ?>
-    </div>
-    
-    
+    <script src="js/materialize.min.js"></script>
+    <script>
+        // Sidenav
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.sidenav');
+            M.Sidenav.init(elems);
+        });
+    </script>
 </body>
 </html>

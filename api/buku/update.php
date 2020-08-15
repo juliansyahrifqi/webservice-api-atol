@@ -4,7 +4,7 @@
     header("Access-Control-Allow-Methods: POST");
     
     include_once '../config/database.php';
-    include_once '../objects/buku.php';
+    include_once '../models/buku.php';
 
     // Instance objek database
     $database = new Database();
@@ -22,11 +22,14 @@
     $buku->id_buku = $data->id_buku;
 
     // Set nilai yang akan diedit
-    $buku->judul_buku = $data->judul_buku;
-    $buku->penerbit = $data->penerbit;
+    $buku->judul = $data->judul;
     $buku->penulis = $data->penulis;
+    $buku->penerbit = $data->penerbit;
     $buku->deskripsi = $data->deskripsi;
-    $buku->date_created = $data->date_created;
+    $buku->bahasa = $data->bahasa;
+    $buku->genre = $data->genre;
+    $buku->jumlah_halaman = $data->jumlah_halaman;
+    $buku->tahun_terbit = $data->tahun_terbit;
 
     // Jika update berhasil
     if($buku->update()) {

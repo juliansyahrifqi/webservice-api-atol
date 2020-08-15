@@ -4,7 +4,7 @@
     header("Content-Type: application/json; charset=UTF-8");
     
     include_once '../config/database.php';
-    include_once '../objects/buku.php';
+    include_once '../models/buku.php';
     
     // Instance database
     $database = new Database();
@@ -27,22 +27,25 @@
     
         // Buat array buku 
         $buku_arr=array();
-        $buku_arr["search"]=array();
+        $buku_arr["buku"]=array();
     
         // Mengambil data dari tabel
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
         
             $buku_item = array(
                 "id_buku" => $row['id_buku'],
-                "judul_buku" => $row['judul_buku'],
-                "penerbit" => $row['penerbit'],
+                "judul" => $row['judul'],
                 "penulis" => $row['penulis'],
+                "penerbit" => $row['penerbit'],
                 "deksripsi" => $row['deskripsi'],
-                "date_created" => $row['date_created']
+                "bahasa" => $row['bahasa'],
+                "genre" => $row['genre'],
+                "jumlah_halaman" => $row['jumlah_halaman'],
+                "tahun_terbit" => $row['tahun_terbit']
             );
     
             // Tambahkan data ke array
-            array_push($buku_arr["search"], $buku_item);
+            array_push($buku_arr["buku"], $buku_item);
         }
     
         // Set respons kode 200 = OK!

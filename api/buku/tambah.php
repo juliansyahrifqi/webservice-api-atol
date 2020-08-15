@@ -5,7 +5,7 @@
     header("Access-Control-Allow-Method: POST");
     
     include_once '../config/database.php';
-    include_once '../objects/buku.php';
+    include_once '../models/buku.php';
 
     // Instance objek database
     $database = new Database();
@@ -20,14 +20,19 @@
     $data = json_decode(file_get_contents("php://input"));
 
     // Jika field tidak kosong
-    if(!empty($data->judul_buku) && !empty($data->penerbit) && !empty($data->penulis) && !empty($data->deskripsi)) {
+    if(!empty($data->judul) && !empty($data->penulis) && !empty($data->penerbit) 
+        && !empty($data->deskripsi) && !empty($data->bahasa) && !empty($data->genre)
+        && !empty($data->genre) && !empty($data->jumlah_halaman) && !empty($data->tahun_terbit))  {
        
         // Isi property buku
-        $buku->judul_buku = $data->judul_buku;
-        $buku->penerbit = $data->penerbit;
+        $buku->judul = $data->judul;
         $buku->penulis = $data->penulis;
+        $buku->penerbit = $data->penerbit;
         $buku->deskripsi = $data->deskripsi;
-        $buku->date_created = date('Y-m-d');
+        $buku->bahasa = $data->bahasa;
+        $buku->genre = $data->genre;
+        $buku->jumlah_halaman = $data->jumlah_halaman;
+        $buku->tahun_terbit = $data->tahun_terbit;
 
         // Jika proses tambah berhasil ( true )
         if($buku->tambah()) {
