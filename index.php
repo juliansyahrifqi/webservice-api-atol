@@ -47,7 +47,7 @@
 
     <nav class="indigo darken-4">
         <div class="nav-wrapper container">
-            <a href="#!" class="brand-logo">Premier League</a>
+            <a href="#" class="brand-logo">Premier League</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             
             <ul class="right hide-on-med-and-down">
@@ -67,7 +67,7 @@
     <div class="row">
         <h2 class="center-align">Klasemen Premier League</h2>
         <p class="center-align">Terakhir Update: <strong><?= $update['lastUpdated']; ?></strong></p>
-        <table class="klasemen" id="tabel-klasemen">
+        <table class="klasemen responsive-table" id="tabel-klasemen">
             <thead>
                 <tr>
                     <th class="center-align"> No.</th>
